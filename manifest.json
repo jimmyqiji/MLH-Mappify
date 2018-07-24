@@ -1,20 +1,25 @@
 {
 	"manifest_version": 2,
 
-    "name": "Mapify MLH",
+    "name": "Mappify MLH",
     "browser_action": {
         "default_icon": "images/logo.png",
-        "default_title": "Mapify MLH",
-        "default_popup": "src/popup.html"
+        "default_title": "Mappify MLH",
+        "default_popup": "./src/popup.html"
     },
     "description": "A map for the Major League Hackathons",
     "icons": {
-        "128": "images/logo.png",
-        "16": "images/logo_16.png",
-        "48": "images/logo_48.png"
+        "128": "./images/logo.png",
+        "16": "./images/logo_16.png",
+        "48": "./images/logo_48.png"
     },
     "permissions": [ "notifications", "activeTab", "tabs"],
     "version": "1.0",
-    "web_accessible_resources": [ "images/*" ]
-    }]
+    "web_accessible_resources": [ "images/*" ],
+    "content_scripts": [
+        {
+          "matches": ["*://mlh.io/seasons/na*/events*"],
+          "js": ["./scripts/mlh-active.js"]
+        }
+    ]
 }
