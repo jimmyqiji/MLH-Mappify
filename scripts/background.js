@@ -5,8 +5,8 @@ chrome.runtime.onInstalled.addListener(function() {
 chrome.tabs.onActivated.addListener(function(info) {
 
 	chrome.tabs.query({
-	    active: true,               // Select active tabs
-	    lastFocusedWindow: true     // In the current window
+	    active: true,
+	    lastFocusedWindow: true
 	}, function(array_of_Tabs) {
 	    // Since there can only be one active tab in one active window, 
 	    //  the array has only one element
@@ -27,13 +27,11 @@ chrome.tabs.onActivated.addListener(function(info) {
 });
 
 function mlh_success() {
-  /* ... */
   chrome.storage.local.set({mlh: true});
   chrome.browserAction.setPopup({popup: "../src/popup_success.html"});
 }
 
 function mlh_failure() {
-  /* ... */
   chrome.storage.local.set({mlh: false});
   chrome.browserAction.setPopup({popup: "../src/popup_failure.html"});
 }
