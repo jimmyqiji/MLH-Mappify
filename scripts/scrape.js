@@ -1,5 +1,6 @@
-let cheerio = require('cheerio');
-let jsonframe = require('jsonframe-cheerio');
+var cheerio = require('cheerio');
+var jsonframe = require('jsonframe-cheerio');
+var request = require('request');
 
 document.addEventListener('DOMContentLoaded', function() {
   	var mappifyButton = document.getElementById('btnMappify');
@@ -9,53 +10,44 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function scrape() {
-	let $ = cheerio.load('https://mlh.io/seasons/na-2019/events'); // tentative, change later to current url
-	jsonframe($); // initializes the plugin
+	request('https://mlh.io/seasons/na-2019/events', function (error, response, body) { // tentative, change later to current url
+		if (!error && response.statusCode == 200) {
+			// console.log(body);
+			var $ = cheerio.load(body); 
+			jsonframe($); // initializes the plugin
 
-
-	var frame = {
-		"hackathons": {           
-			"_s": ".event .event-wrapper .event-link",   
-			"_d": [{
-				"name": {
-					 "_s": ".inner [itemprop=name]",
-					 "_a": "title"
-				},
-				"url": {
-					"_s": "[itemprop=url]",
-					"_a": "href"
-				},
-				"logo": {
-					"_s": ".inner .event-logo img",
-					"_a": "src"
-				},
-				"duration": {
-					"_s": ".inner",
+			var frame = {
+				"hackathons": {           
+					"_s": ".event",   
 					"_d": [{
-						"start-date": {
-							"_s": "[itemprop=startDate]",
-							"_a": "content"
+						"name": "[itemprop=name]",
+						"url": "[itemprop=url] @ href",
+						"logo": ".event-logo img @ src",
+						"duration": {
+							"_s": ".event-wrapper .event-link .inner",
+							"_d": [{
+								"start-date": "[itemprop=startDate] @ content",
+								"end-date": "[itemprop=endDate] @ content"
+							}]
 						},
-						"end-date": {
-							"_s": "[itemprop=endDate]",
-							"_a": "content"
+						"location": {
+							"_s": ".event-wrapper .event-link .inner [itemprop=address]",
+							"_d": [{
+								"province": "span[itemprop=addressRegion]",         
+								"city": "[itemprop=addressLocality]"
+							}]
 						}
 					}]
-				},
-				"location": {
-					"_s": ".inner [itemprop=address]",
-					"_d": [{
-						"province": "[itemprop=addressRegion]",         
-						"city": "[itemprop=addressLocality]"
-					}]
 				}
-			}]
+
+			};
+
+			var hackthonList = $('body').scrape(frame, { string: true });
+			// alert(hackthonList);
+			console.log(hackthonList);
 		}
-
-	};
-
-	var companiesList = $('seasons-events .container .row').scrape(frame);
-	List = $('.list.items').scrape(frame);
-	alert(companiesList);
-	console.log(companiesList);
+		else {
+			console.log(error);
+		}
+	});
 }
