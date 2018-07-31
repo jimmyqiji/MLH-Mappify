@@ -19,5 +19,9 @@
     "background": {
         "scripts": ["./scripts/background.js"],
         "persistent": false
-    }
+    },
+    "content_scripts": [{
+         "js": ["./scripts/jquery.min.js"],
+         "matches": ["*://mlh.io/seasons/na*/events*"]
+       }]
 }

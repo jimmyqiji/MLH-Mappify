@@ -5,7 +5,9 @@ var request = require('request');
 document.addEventListener('DOMContentLoaded', function() {
   	var mappifyButton = document.getElementById('btnMappify');
   	mappifyButton.addEventListener('click', function() {
-		scrape();
+		var hackathonList = scrape();
+		console.log(hackathonList);
+		mappify(hackathonList);
   	})
 });
 
@@ -42,12 +44,21 @@ function scrape() {
 
 			};
 
-			var hackthonList = $('body').scrape(frame, { string: true });
-			// alert(hackthonList);
-			console.log(hackthonList);
+			var hackathonList = $('body').scrape(frame, { string: true });
+			// alert(hackathonList);
+			// console.log(hackathonList);
+			return hackathonList;
 		}
 		else {
 			console.log(error);
 		}
 	});
+}
+
+function mappify(hackathonList) {
+	// $('head').append(leaflet);
+	// $('body').append('<p>appended</p>');
+	chrome.tabs.executeScript({
+	    file: './scripts/appendtest.js'
+	  }); 
 }
