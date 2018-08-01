@@ -13,7 +13,7 @@
         "16": "./images/logo_16.png",
         "48": "./images/logo_48.png"
     },
-    "permissions": [ "notifications", "activeTab", "tabs", "storage"],
+    "permissions": [ "webNavigation", "notifications", "activeTab", "tabs", "storage"],
     "version": "1.0",
     "web_accessible_resources": [ "images/*" ],
     "background": {
