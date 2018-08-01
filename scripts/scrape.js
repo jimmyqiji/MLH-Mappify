@@ -9,8 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		// hackathonList = scrape()
 		scrape()
 		.then(function(hackathonList) {
-			console.log("print in .then");
-			console.log(hackathonList);
+			// console.log("print in .then");
+			// console.log(hackathonList);
 			if (hackathonList != "Failed") {
 				mappify(hackathonList);
 			}
@@ -61,8 +61,8 @@ function scrape() {
 					reject("Failed");
 				}
 				
-				console.log("After resolve reject print:")
-				console.log(hackathonList);
+				// console.log("After resolve reject print:")
+				// console.log(hackathonList);
 				// return hackathonList;
 				
 			}
@@ -75,10 +75,8 @@ function scrape() {
 }
 
 function mappify(hackathonList) {
-	// $('head').append(leaflet);
-	// $('body').append('<p>appended</p>');
-	console.log("in mappify");
-	console.log(hackathonList);
+	// console.log("in mappify");
+	// console.log(hackathonList);
 	chrome.tabs.executeScript({
 	    file: './scripts/inject.js'
 	  }); 
