@@ -21,7 +21,8 @@
         "persistent": false
     },
     "content_scripts": [{
-         "js": ["./scripts/jquery.min.js"],
-         "matches": ["*://mlh.io/seasons/na*/events*"]
+         "matches": ["*://mlh.io/seasons/na*/events*"],
+         "css": ["./style/leaflet.css"],
+         "js": ["./scripts/jquery.min.js", "./scripts/leaflet.js"]         
        }]
 }
