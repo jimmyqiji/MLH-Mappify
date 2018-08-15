@@ -31,7 +31,7 @@ $('head').append('<style> body { background: transparent; } </style>');
 
 $('head').promise().done(function() {
 	$('body').append('<div id="mapid"></div>');
-	$('head').append('<style type="text/css"> #mapid { position: fixed; height: 100%; top: 0; left: 0; } </style>');
+	$('head').append('<style type="text/css"> #mapid { position: fixed; height: 500px; top: 0; left: 0; } </style>');
 	$('head').append("<script>var mymap = L.map('mapid').setView([43.482670, -80.250168], 10);</script>");
 	$('head').append("<script>L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', { attribution: 'Map data &copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors, <a href=&quot;https://creativecommons.org/licenses/by-sa/2.0/&quot;>CC-BY-SA</a>, Imagery © <a href=&quot;https://www.mapbox.com/&quot;>Mapbox</a>', maxZoom: 18, id: 'mapbox.streets', accessToken: 'pk.eyJ1IjoicWl2YWxyeSIsImEiOiJjampnNTBhY2s1NHRxM3BvZ2U1eDN3anQyIn0.qpmZ6Dv3v0lAjWVhGEgvig'}).addTo(mymap);</script>");
 });
