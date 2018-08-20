@@ -32968,7 +32968,7 @@ function scrape() {
 
 				};
 				
-				var hackathonList = [];
+				var hackathonList;
 
 				if(hackathonList = $('body').scrape(frame, { string: true })){
 					resolve(hackathonList);
@@ -32991,7 +32991,12 @@ function scrape() {
 }
 
 function mappify(hackathonList) {
-	console.log(hackathonList);
+	hackathonJson = JSON.parse(hackathonList);
+	console.log(hackathonJson);
+	var province = hackathonJson.hackathons[0].location[0].province;
+	var city = hackathonJson.hackathons[0].location[0].city;
+	console.log(province);
+	console.log(city);
 }
 
 $('head').append("<style> html { overflow-y: hidden; } </style>");
