@@ -63,14 +63,22 @@ function mappify(hackathonList) {
 	init_map();
     hackathonJson = JSON.parse(hackathonList);
 	console.log(hackathonJson);
-	hackathonJson.hackathons.map((index, element) => {
-		let province = element.location.province;
-		let city = element.location.city;
+	console.log(L);
+	L.mapbox.accessToken = 'pk.eyJ1IjoicWl2YWxyeSIsImEiOiJjampnNTBhY2s1NHRxM3BvZ2U1eDN3anQyIn0.qpmZ6Dv3v0lAjWVhGEgvig';
+	let geocoder = L.mapbox.geocoder('mapbox.places');
+	geocoder.query(city+", "+province, (err, data) => { console.log(data); });
+	// hackathonJson.hackathons.map((index, element) => {
+	// 	let province = element.location.province;
+	// 	let city = element.location.city;
+	// 	let latlng = await geocoder.query(city+", "+province, (err, data) => {
 
-	});
+	// 	});
+	// });
 }
 
 function init_map() {
+	$('head').append('<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" /><script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>');
+	$('head').append("<script src='https://api.mapbox.com/mapbox.js/v3.2.0/mapbox.js'></script> <link href='https://api.mapbox.com/mapbox.js/v3.2.0/mapbox.css' rel='stylesheet' />");
 	$('head').append("<style> html { overflow-y: hidden; } </style>");
 	$('body > div:nth-child(1)').addClass("old-site");
 	$('head').append("<style> .old-site { max-height: 77px; } </style>");

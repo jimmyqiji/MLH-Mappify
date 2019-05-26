@@ -22,7 +22,7 @@
     },
     "content_scripts": [{
          "matches": ["*://mlh.io/seasons/na*/events*"],
-         "css": ["./style/leaflet.css"],
-         "js": ["./scripts/jquery.min.js", "./scripts/leaflet.js"]         
+         "css": ["/npm_modules/leaflet/dist/leaflet.css"],
+         "js": ["/npm_modules/jquery/dist/jquery.min.js", "/npm_modules/leaflet/dist/leaflet.js"]         
        }]
 }
