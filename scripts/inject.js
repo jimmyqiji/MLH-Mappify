@@ -1,7 +1,7 @@
 var cheerio = require('cheerio');
 var jsonframe = require('jsonframe-cheerio');
 var request = require('request');
-import { OpenStreetMapProvider } from 'leaflet-geosearch';
+var geosearch = require('leaflet-geosearch');
 
 scrape()
 .then(function(hackathonList) {
@@ -63,16 +63,18 @@ function scrape() {
 async function mappify(hackathonList) {
 	init_map();
     hackathonJson = JSON.parse(hackathonList);
-	const geocoder = new OpenStreetMapProvider();
-	let results = await geocoder.search({query: hackathonJson.hackathons[0].location.city + " ," + hackathonJson.hackathons[0].location.province});
-	console.log(results);
-	// hackathonJson.hackathons.map((index, element) => {
-	// 	let province = element.location.province;
-	// 	let city = element.location.city;
-	// 	let latlng = await geocoder.query(city+", "+province, (err, data) => {
-
-	// 	});
-	// });
+	const geocoder = new geosearch.OpenStreetMapProvider();
+	for(let i = 0; i < 4; i++) {
+		let province = hackathonJson.hackathon[i].location.province;
+		let city = hackathonJson.hackathon[i].location.city;
+		let results = await geocoder.search({query: hackathonJson.hackathons[i].location.city + " ," + hackathonJson.hackathons[i].location.province});
+		try {
+			result = result[0];
+		}
+		catch(err) {continue;}
+		let lat = result.y;
+		let lng = result.x;
+	};
 }
 
 function init_map() {
