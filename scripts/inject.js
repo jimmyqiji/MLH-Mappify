@@ -74,6 +74,7 @@ async function mappify(hackathonList) {
 		catch(err) {continue;}
 		let lat = result.y;
 		let lng = result.x;
+		
 	};
 }
 
