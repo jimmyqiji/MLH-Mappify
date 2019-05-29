@@ -61,20 +61,21 @@ function scrape() {
 }
 
 async function mappify(hackathonList) {
-	init_map();
+	let map = init_map();
+	// console.log(map);
     hackathonJson = JSON.parse(hackathonList);
 	const geocoder = new geosearch.OpenStreetMapProvider();
 	for(let i = 0; i < 4; i++) {
-		let province = hackathonJson.hackathon[i].location.province;
-		let city = hackathonJson.hackathon[i].location.city;
-		let results = await geocoder.search({query: hackathonJson.hackathons[i].location.city + " ," + hackathonJson.hackathons[i].location.province});
+		let province = hackathonJson.hackathons[i].location.province;
+		let city = hackathonJson.hackathons[i].location.city;
+		let results = await geocoder.search({query: city + " ," + province});
 		try {
-			result = result[0];
+			results = results[0];
 		}
 		catch(err) {continue;}
-		let lat = result.y;
-		let lng = result.x;
-		
+		let lat = results.y;
+		let lng = results.x;
+		L.marker([lat, lng]).addTo(map);
 	};
 }
 
@@ -99,13 +100,15 @@ function init_map() {
 	$('head').append(sideBarStyle);
 	
 	var mapstyle = '<style type="text/css"> #mapid { position: fixed; width:100%; height:' + mapheight.toString() + 'px; bottom: 0px; right: 0; z-index: 50;} </style>';
+	let map;
 	$('head').promise().done(function() {
 		$('body').append('<div id="mapid"></div>');
 		$('head').append(mapstyle);
-		var map = L.map('mapid').setView([43.482670, -80.250168], 10);
+		map = L.map('mapid').setView([43.482670, -80.250168], 10);
 		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', { attribution: 'Map data &copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors, <a href=&quot;https://creativecommons.org/licenses/by-sa/2.0/&quot;>CC-BY-SA</a>, Imagery © <a href=&quot;https://www.mapbox.com/&quot;>Mapbox</a>', maxZoom: 18, id: 'mapbox.streets', accessToken: 'pk.eyJ1IjoicWl2YWxyeSIsImEiOiJjampnNTBhY2s1NHRxM3BvZ2U1eDN3anQyIn0.qpmZ6Dv3v0lAjWVhGEgvig'}).addTo(map);
 		map.zoomControl.setPosition('topright');
 	});
+	return map;
 }
 
 
