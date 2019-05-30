@@ -68,6 +68,7 @@ async function mappify(hackathonList) {
 	for(let i = 0; i < 4; i++) {
 		let province = hackathonJson.hackathons[i].location.province;
 		let city = hackathonJson.hackathons[i].location.city;
+		console.log(hackathonJson.hackathons);
 		let results = await geocoder.search({query: city + " ," + province});
 		try {
 			results = results[0];
@@ -75,7 +76,10 @@ async function mappify(hackathonList) {
 		catch(err) {continue;}
 		let lat = results.y;
 		let lng = results.x;
-		L.marker([lat, lng]).addTo(map);
+		L.marker([lat, lng])
+			.addTo(map)
+			.bindPopup("<b>Hello world!</b><br>I am a popup.")
+			.openPopup();
 	};
 }
 
