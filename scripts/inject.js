@@ -28,8 +28,8 @@ function scrape() {
                             "duration": {
                                 "_s": ".event-wrapper .event-link .inner",
                                 "_d": {
-                                    "start-date": "[itemprop=startDate] @ content",
-                                    "end-date": "[itemprop=endDate] @ content"
+                                    "start_date": "[itemprop=startDate] @ content",
+                                    "end_date": "[itemprop=endDate] @ content"
                                 }
                             },
                             "location": {
@@ -62,14 +62,13 @@ function scrape() {
 
 async function mappify(hackathonList) {
 	let map = init_map();
-	// console.log(map);
     hackathonJson = JSON.parse(hackathonList);
 	const geocoder = new geosearch.OpenStreetMapProvider();
 	for(let i = 0; i < 4; i++) {
 		let province = hackathonJson.hackathons[i].location.province;
 		let city = hackathonJson.hackathons[i].location.city;
-		console.log(hackathonJson.hackathons);
-		let results = await geocoder.search({query: city + " ," + province});
+		let location = city + " ," + province;
+		let results = await geocoder.search({query: location});
 		try {
 			results = results[0];
 		}
@@ -77,9 +76,13 @@ async function mappify(hackathonList) {
 		let lat = results.y;
 		let lng = results.x;
 		L.marker([lat, lng])
-			.addTo(map)
-			.bindPopup("<b>Hello world!</b><br>I am a popup.")
-			.openPopup();
+			.bindPopup(
+				hackathonJson.hackathons[i].name + "<br>"
+				+ location + "<br>"
+				+ "from " + hackathonJson.hackathons[i].duration.start_date 
+				+ " to " + hackathonJson.hackathons[i].duration.end_date
+			)
+			.addTo(map);
 	};
 }
 
