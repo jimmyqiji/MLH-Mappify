@@ -64,7 +64,7 @@ async function mappify(hackathonList) {
 	let map = init_map();
     hackathonJson = JSON.parse(hackathonList);
 	const geocoder = new geosearch.OpenStreetMapProvider();
-	for(let i = 0; i < 4; i++) {
+	for(let i = 0; i < 1; i++) {
 		let province = hackathonJson.hackathons[i].location.province;
 		let city = hackathonJson.hackathons[i].location.city;
 		let location = city + " ," + province;
@@ -75,20 +75,18 @@ async function mappify(hackathonList) {
 		catch(err) {continue;}
 		let lat = results.y;
 		let lng = results.x;
+		let popup_content = hackathonJson.hackathons[i].name + "<br>"
+			+ location + "<br>"
+			+ "from " + hackathonJson.hackathons[i].duration.start_date 
+			+ " to " + hackathonJson.hackathons[i].duration.end_date;
 		L.marker([lat, lng])
-			.bindPopup(
-				hackathonJson.hackathons[i].name + "<br>"
-				+ location + "<br>"
-				+ "from " + hackathonJson.hackathons[i].duration.start_date 
-				+ " to " + hackathonJson.hackathons[i].duration.end_date
-			)
+			.bindPopup(popup_content)
 			.addTo(map);
 	};
 }
 
 function init_map() {
 	$('head').append('<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" /><script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>');
-	$('head').append("<script src='https://api.mapbox.com/mapbox.js/v3.2.0/mapbox.js'></script> <link href='https://api.mapbox.com/mapbox.js/v3.2.0/mapbox.css' rel='stylesheet' />");
 	$('head').append("<style> html { overflow-y: hidden; } </style>");
 	$('body > div:nth-child(1)').addClass("old-site");
 	$('head').append("<style> .old-site { max-height: 77px; } </style>");
