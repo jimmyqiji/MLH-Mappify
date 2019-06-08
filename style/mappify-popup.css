@@ -1,0 +1,8 @@
+.leaflet-popup-content-wrapper {
+    text-align: center;
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+	background: cornsilk;
+}

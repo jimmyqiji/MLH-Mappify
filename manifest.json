@@ -15,7 +15,7 @@
     },
     "permissions": [ "webNavigation", "notifications", "activeTab", "tabs", "storage"],
     "version": "1.0",
-    "web_accessible_resources": [ "images/*" ],
+    "web_accessible_resources": [ "images/*", "/style/mappify-popup.css" ],
     "background": {
         "scripts": ["./scripts/background.js"],
         "persistent": false

@@ -75,10 +75,12 @@ async function mappify(hackathonList) {
 		catch(err) {continue;}
 		let lat = results.y;
 		let lng = results.x;
-		let popup_content = hackathonJson.hackathons[i].name + "<br>"
+		let popup_content = "<div class='mappify-popup'>"
+			+ "<b>" + hackathonJson.hackathons[i].name + "</b><br>"
 			+ location + "<br>"
-			+ "from " + hackathonJson.hackathons[i].duration.start_date 
-			+ " to " + hackathonJson.hackathons[i].duration.end_date;
+			+ "From " + hackathonJson.hackathons[i].duration.start_date 
+			+ " to " + hackathonJson.hackathons[i].duration.end_date
+			+ "</div>";
 		L.marker([lat, lng])
 			.bindPopup(popup_content)
 			.addTo(map);
@@ -87,6 +89,7 @@ async function mappify(hackathonList) {
 
 function init_map() {
 	$('head').append('<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" /><script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>');
+	$('head').append(`<link rel="stylesheet" href=${chrome.extension.getURL("/style/mappify-popup.css")} />`);
 	$('head').append("<style> html { overflow-y: hidden; } </style>");
 	$('body > div:nth-child(1)').addClass("old-site");
 	$('head').append("<style> .old-site { max-height: 77px; } </style>");
